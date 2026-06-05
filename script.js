@@ -457,6 +457,20 @@ function renderVideos() {
     });
 
     /* ── Lazy Cloudinary: click thumbnail → swap in <video> ── */
+    /* Keep a registry of every live Cloudinary <video> on the page.
+       Whenever ANY of them fires 'play', all others are immediately paused.
+       This covers both the initial click AND the user pressing the native
+       play button on a previously-paused video. */
+    if (!window._cldVideos) window._cldVideos = new Set();
+
+    function pauseAllCldExcept(current) {
+        window._cldVideos.forEach(v => {
+            if (v !== current && !v.paused) {
+                v.pause();
+            }
+        });
+    }
+
     document.querySelectorAll('.cld-lazy').forEach(el => {
         el.addEventListener('click', function () {
             const video = document.createElement('video');
@@ -480,6 +494,37 @@ function renderVideos() {
                 }
             };
             video.addEventListener('durationchange', onDuration);
+
+            // Every time this video plays (first load OR user pressing play again),
+            // pause every other registered video immediately.
+            video.addEventListener('play', () => { pauseAllCldExcept(video); });
+
+            // Clean up registry when the video finishes
+            video.addEventListener('ended', () => {
+                window._cldVideos.delete(video);
+                if (video._cldObserver) { video._cldObserver.disconnect(); delete video._cldObserver; }
+            });
+
+            // ── Scroll-away auto-pause via IntersectionObserver ──
+            // Pause the video automatically when it scrolls out of view,
+            // resume when it scrolls back in only if it was playing when it left.
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        // Scrolled out of view — pause if playing
+                        if (!video.paused) {
+                            video._cldWasPlaying = true;
+                            video.pause();
+                        }
+                    }
+                });
+            }, { threshold: 0.2 }); // fires when less than 20% is visible
+            observer.observe(video);
+            video._cldObserver = observer;
+
+            // Register this video, pause all others, then start it
+            window._cldVideos.add(video);
+            pauseAllCldExcept(video);
 
             this.replaceWith(video);
             video.play().catch(() => {});

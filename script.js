@@ -212,7 +212,7 @@ const SETTINGS = {
         }
     });
 
-    // Build nav dynamically — only visible sections appear
+    // Build desktop nav dynamically — only visible sections appear
     const nav = document.getElementById('main-nav');
     if (nav) {
         nav.innerHTML = Object.entries(map)
@@ -221,6 +221,58 @@ const SETTINGS = {
                 `<a href="#${cfg.id}" class="hover-me">${cfg.label}</a>`
             ).join('');
     }
+
+    // Build mobile drawer nav — same links
+    const mobileNav = document.getElementById('mobile-nav');
+    if (mobileNav) {
+        mobileNav.innerHTML = Object.entries(map)
+            .filter(([key]) => SETTINGS[key])
+            .map(([, cfg]) =>
+                `<a href="#${cfg.id}">${cfg.label}</a>`
+            ).join('');
+    }
+})();
+
+
+/* ─── MOBILE DRAWER LOGIC ────────────────────────────────── */
+(function initMobileDrawer() {
+    const btn      = document.getElementById('mobile-menu-btn');
+    const drawer   = document.getElementById('mobile-drawer');
+    const overlay  = document.getElementById('mobile-drawer-overlay');
+    const closeBtn = document.getElementById('mobile-drawer-close');
+    if (!btn || !drawer || !overlay) return;
+
+    function openDrawer() {
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        btn.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        btn.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    btn.addEventListener('click', () => {
+        drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    overlay.addEventListener('click', closeDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+    // Close drawer when a nav link is tapped
+    const mobileNav = document.getElementById('mobile-nav');
+    if (mobileNav) {
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeDrawer);
+        });
+    }
+    // Also close CTA inside drawer footer
+    const drawerCta = document.querySelector('.mobile-drawer-cta');
+    if (drawerCta) drawerCta.addEventListener('click', closeDrawer);
 })();
 
 
@@ -1133,8 +1185,13 @@ async function submitForm() {
 
 /* ─── NAV SHRINK ON SCROLL ──────────────────────────────── */
 window.addEventListener('scroll', () => {
-    document.getElementById('nav').style.padding =
-        window.scrollY > 60 ? '14px 48px' : '24px 48px';
+    const isMobile = window.innerWidth <= 768;
+    const nav = document.getElementById('nav');
+    if (isMobile) {
+        nav.style.padding = window.scrollY > 60 ? '12px 20px' : '16px 20px';
+    } else {
+        nav.style.padding = window.scrollY > 60 ? '14px 48px' : '24px 48px';
+    }
 });
 
 
@@ -1293,6 +1350,12 @@ async function renderFeedback() {
 
         triggerReveals();
         initHoverListeners();
+
+        // Show scroll hint when more than 4 reviews exist
+        const scrollHint = document.getElementById('fb-scroll-hint');
+        if (scrollHint) {
+            scrollHint.style.display = reviews.length > 4 ? 'flex' : 'none';
+        }
 
         // Wire edit buttons via event delegation (safe — no inline onclick)
         container.querySelectorAll('.fb-edit-btn').forEach(btn => {

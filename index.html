@@ -45,8 +45,34 @@
     <nav class="hidden md:flex gap-8" id="main-nav">
         <!-- Nav links are injected by script.js based on SETTINGS -->
     </nav>
-    <a href="#inquire" class="nav-cta hover-me">Let's work</a>
+    <div style="display:flex;align-items:center;gap:12px;">
+        <a href="#inquire" class="nav-cta hover-me">Let's work</a>
+        <button id="mobile-menu-btn" class="mobile-menu-btn hover-me" aria-label="Open menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
 </header>
+
+<!-- ══════════════════════════════════════════════════════
+     MOBILE DRAWER NAV
+═══════════════════════════════════════════════════════ -->
+<div id="mobile-drawer-overlay" class="mobile-drawer-overlay"></div>
+<aside id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+    <div class="mobile-drawer-header">
+        <span class="nav-logo">SASHANK<sup style="color:var(--accent);font-size:8px;">®</sup></span>
+        <button id="mobile-drawer-close" class="mobile-drawer-close hover-me" aria-label="Close menu">✕</button>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav">
+        <!-- Injected by script.js -->
+    </nav>
+    <div class="mobile-drawer-footer">
+        <a href="#inquire" class="btn-primary mobile-drawer-cta hover-me">Let's work →</a>
+        <div style="margin-top:24px;display:flex;flex-direction:column;gap:6px;">
+            <p style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);">Available for Freelance</p>
+            <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--dim);">sashanksahoo208@gmail.com</p>
+        </div>
+    </div>
+</aside>
 
 <main>
 
@@ -406,15 +432,25 @@
         <div class="feedback-grid">
             <!-- LEFT: Testimonials Wall -->
             <div class="feedback-wall">
-                <div style="margin-bottom:24px;">
+                <div style="margin-bottom:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
                     <p style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);">Verified Client Testimonials</p>
+                    <p id="fb-scroll-hint" style="display:none; font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:6px;">
+                        <span style="display:inline-block; width:14px; height:14px; border:1px solid var(--muted); border-radius:50%; position:relative; flex-shrink:0;">
+                            <span style="position:absolute; left:50%; top:30%; transform:translateX(-50%); width:1px; height:5px; background:var(--muted); border-radius:1px;"></span>
+                        </span>
+                        Scroll to see more
+                    </p>
                 </div>
-                <div id="feedback-cards-container">
-                    <div id="feedback-empty-state" style="display:none; padding:48px 0; text-align:center;">
-                        <p style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--muted);">No testimonials yet — be the first.</p>
+                <!-- Fixed-height scrollable cards area -->
+                <div class="feedback-scroll-area">
+                    <div id="feedback-cards-container">
+                        <div id="feedback-empty-state" style="display:none; padding:48px 0; text-align:center;">
+                            <p style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--muted);">No testimonials yet — be the first.</p>
+                        </div>
                     </div>
                 </div>
-                <div id="feedback-summary" style="display:none; margin-top:32px; padding-top:24px; border-top:1px solid var(--border);">
+                <!-- Summary sits OUTSIDE the scroll area — always visible at bottom -->
+                <div id="feedback-summary" style="display:none; margin-top:24px; padding-top:20px; border-top:1px solid var(--border);">
                     <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
                         <div id="summary-score" style="font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; letter-spacing:-0.04em; color:var(--accent);">—</div>
                         <div>

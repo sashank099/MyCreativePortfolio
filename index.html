@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sashank Sekhar Sahoo | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     CUSTOM CURSOR
+═══════════════════════════════════════════════════════ -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ══════════════════════════════════════════════════════
+     LOADER
+═══════════════════════════════════════════════════════ -->
+<div id="loader">
+    <canvas id="loader-canvas"></canvas>
+    <div class="loader-content">
+        <p class="loader-label">Portfolio — Motion & Visual Design</p>
+        <div class="loader-name" id="loader-name">
+            <span id="ln-s">S</span><span id="ln-a">A</span><span id="ln-s2">S</span><span id="ln-h">H</span><span id="ln-a2">A</span><span id="ln-n">N</span><span id="ln-k">K</span>
+        </div>
+        <p class="loader-tagline">NIT Rourkela · Chemical Engineering</p>
+        <div class="loader-progress-wrap">
+            <div class="loader-progress-bar">
+                <div class="loader-progress-fill" id="loader-fill"></div>
+            </div>
+            <p class="loader-progress-pct" id="loader-pct">0%</p>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════ -->
+<header id="nav">
+    <a href="#" class="nav-logo hover-me">SASHANK<sup>®</sup></a>
+    <nav class="hidden md:flex gap-8" id="main-nav">
+        <!-- Nav links are injected by script.js based on SETTINGS -->
+    </nav>
+    <a href="#inquire" class="nav-cta hover-me">Let's work</a>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════ -->
+<section class="intro-section">
+    <div class="intro-grid">
+        <!-- Left: TEXT -->
+        <div>
+            <p class="section-label reveal"><span class="accent-bar"></span>Visual Editor · Graphic Designer</p>
+
+            <h1 class="font-display hero-text reveal reveal-delay-1">
+                <span style="color:var(--dim); font-weight:700;">CRAFTING</span><br>
+                <span>VISUAL</span><br>
+                <span>STORIES.</span>
+            </h1>
+
+            <div style="margin-top:40px; max-width:520px;" class="reveal reveal-delay-2">
+                <p style="font-size:16px; line-height:1.7; color:var(--dim);">
+                    Hi, I'm <strong style="color:#fff;">Sashank Sekhar Sahoo</strong> — a second year undergraduate
+                    at <strong style="color:#fff;">NIT Rourkela</strong>, pursuing a B.Tech in
+                    <em class="font-serif-it" style="color:#fff; font-size:20px;">Chemical Engineering</em>.
+                    I bridge the precision of engineering with the fluid craft of visual storytelling.
+                </p>
+                <p style="font-size:13px; line-height:1.8; color:var(--dim); margin-top:16px;">
+                    Outside of equations and thermodynamics, I live in the editing timeline — sculpting
+                    <em class="font-serif-it" style="color:#fff;">high-retention narratives</em> through
+                    motion, sound design, and graphic systems that refuse to be generic.
+                </p>
+            </div>
+
+            <div style="margin-top:32px; display:flex; flex-wrap:wrap; gap:10px;" class="reveal reveal-delay-3">
+                <div class="stat-pill hover-me"><span class="dot"></span><span>18 Years Old</span></div>
+                <div class="stat-pill hover-me"><span class="dot"></span><span>2nd Year · NIT RKL</span></div>
+                <div class="stat-pill hover-me"><span class="dot"></span><span>B.Tech Chem Engg</span></div>
+                <div class="stat-pill hover-me"><span class="dot"></span><span>Available for Freelance</span></div>
+            </div>
+
+            <div class="scroll-cue reveal reveal-delay-4">
+                <div class="line"></div>
+                <p class="label">Scroll to explore</p>
+            </div>
+        </div>
+
+        <!-- Right: PHOTO PANEL -->
+        <div class="reveal reveal-delay-2">
+            <div class="intro-visual hover-me">
+                <div class="intro-visual-bg"></div>
+                <!-- Molecular nodes canvas sits behind the photo -->
+                <canvas id="about-canvas"></canvas>
+
+                <!-- ★ YOUR PHOTO — served from Cloudinary ★
+                     Replace YOUR_PHOTO_PUBLIC_ID with the public ID from your Cloudinary dashboard.
+                     Example: if your URL is .../image/upload/v123/sashank_photo.jpg
+                              the public ID is: sashank_photo                   -->
+                <img
+                    src="https://res.cloudinary.com/dfyoex2hk/image/upload/v1780597281/sashank_ziel2v.png"
+                    alt="Sashank Sekhar Sahoo"
+                    id="hero-photo"
+                    onerror="this.style.display='none'; document.getElementById('hero-photo-placeholder').style.display='flex';"
+                    style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; z-index:2;"
+                >
+                <!-- Shown only when the image file is missing -->
+                <div id="hero-photo-placeholder" style="display:none; position:absolute; inset:0; z-index:2; flex-direction:column; align-items:center; justify-content:center; gap:12px;">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="18" r="9" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+                        <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="rgba(255,255,255,.2)" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <p style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.25em; color:rgba(255,255,255,.2); text-transform:uppercase;">Add photo → assets/images/sashank.jpg</p>
+                </div>
+
+                <!-- Gradient overlay so label stays readable over any photo -->
+                <div style="position:absolute; inset:0; z-index:3; background:linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.15) 40%, transparent 100%); pointer-events:none;"></div>
+
+                <div style="position:absolute; top:20px; right:20px; z-index:4;">
+                    <span class="tag-pill">Odisha, India</span>
+                </div>
+                <div style="position:absolute; top:20px; left:20px; z-index:4;">
+                    <span class="tag-pill">18 y/o</span>
+                </div>
+                <div class="intro-visual-label" style="position:relative; z-index:4;">
+                    <p>Currently · 2026</p>
+                    <h3>Sashank Sekhar Sahoo</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     TICKER
+═══════════════════════════════════════════════════════ -->
+<div class="ticker-wrap">
+    <div class="ticker-inner">
+        <span>Motion Design</span><span class="hi">✦</span>
+        <span>Video Editing</span><span class="hi">✦</span>
+        <span>Graphic Design</span><span class="hi">✦</span>
+        <span>Sound Design</span><span class="hi">✦</span>
+        <span>NIT Rourkela</span><span class="hi">✦</span>
+        <span>Chemical Engineering</span><span class="hi">✦</span>
+        <span>High Retention Cuts</span><span class="hi">✦</span>
+        <span>DaVinci Resolve</span><span class="hi">✦</span>
+        <span>After Effects</span><span class="hi">✦</span>
+        <span>Kinetic Typography</span><span class="hi">✦</span>
+        <!-- duplicate for seamless loop -->
+        <span>Motion Design</span><span class="hi">✦</span>
+        <span>Video Editing</span><span class="hi">✦</span>
+        <span>Graphic Design</span><span class="hi">✦</span>
+        <span>Sound Design</span><span class="hi">✦</span>
+        <span>NIT Rourkela</span><span class="hi">✦</span>
+        <span>Chemical Engineering</span><span class="hi">✦</span>
+        <span>High Retention Cuts</span><span class="hi">✦</span>
+        <span>DaVinci Resolve</span><span class="hi">✦</span>
+        <span>After Effects</span><span class="hi">✦</span>
+        <span>Kinetic Typography</span><span class="hi">✦</span>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABOUT / ORIGINS
+═══════════════════════════════════════════════════════ -->
+<section id="about" class="section-pad" style="background:var(--surface);">
+    <div style="max-width:1280px; margin:0 auto;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;" class="about-grid">
+            <div>
+                <p class="section-label reveal"><span class="accent-bar"></span>Origins</p>
+                <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:32px;">WHO IS<br>SASHANK?</h2>
+                <div class="reveal reveal-delay-2">
+                    <p style="font-size:15px; line-height:1.85; color:var(--dim); margin-bottom:20px;">
+                        I'm currently in my <strong style="color:#fff;">second year of B.Tech in Chemical Engineering</strong>
+                        at the <strong style="color:#fff;">National Institute of Technology, Rourkela</strong> — one of India's
+                        premier technical institutions. The discipline trains you to think in systems, balance
+                        variables, and engineer outcomes — a mindset I bring directly into the edit bay.
+                    </p>
+                    <p style="font-size:15px; line-height:1.85; color:var(--dim); margin-bottom:20px;">
+                        I discovered video editing as a way to communicate what equations can't — the
+                        <em class="font-serif-it" style="color:#fff;">feeling</em> of a moment, the rhythm
+                        of an idea, the velocity of a story. Since then, I've been obsessively studying
+                        retention mechanics, motion aesthetics, and graphic systems.
+                    </p>
+                    <p style="font-size:15px; line-height:1.85; color:var(--dim);">
+                        Every project I take on is engineered from the first frame: <em class="font-serif-it" style="color:#fff;">
+                        mathematically paced, aesthetically deliberate, and built to retain.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="reveal reveal-delay-3">
+                <p style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim); margin-bottom:24px;">Timeline</p>
+                <div class="timeline-item hover-me">
+                    <div class="timeline-year">2025</div>
+                    <div>
+                        <h4 class="timeline-title">NIT Rourkela — Enrolled</h4>
+                        <p class="timeline-desc">Joined B.Tech Chemical Engineering at NIT RKL — one of India's premier NITs, located in Rourkela, Odisha.</p>
+                    </div>
+                </div>
+                <div class="timeline-item hover-me">
+                    <div class="timeline-year">2026</div>
+                    <div>
+                        <h4 class="timeline-title">Cinematic Club — Video Editor</h4>
+                        <p class="timeline-desc">Selected as a video editor for the Cinematic Club, the official filmmaking club of NIT Rourkela. Started working on real productions alongside a team of directors, cinematographers, and sound designers.</p>
+                    </div>
+                </div>
+                <div class="timeline-item hover-me">
+                    <div class="timeline-year">2026</div>
+                    <div>
+                        <h4 class="timeline-title">Motion Graphics & After Effects</h4>
+                        <p class="timeline-desc">Expanded beyond the edit timeline — learned motion graphics, kinetic typography, and expression-driven animation in After Effects. Started integrating motion into every project.</p>
+                    </div>
+                </div>
+                <div class="timeline-item hover-me">
+                    <div class="timeline-year">Now</div>
+                    <div>
+                        <h4 class="timeline-title">Building a Full Creative Practice</h4>
+                        <p class="timeline-desc">Delivering full-stack video production, graphic design, and motion graphics — all alongside a 2nd year engineering load. Taking on freelance briefs and personal projects simultaneously.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     TOOLKIT
+═══════════════════════════════════════════════════════ -->
+<section id="toolkit" class="section-pad">
+    <div style="max-width:1280px; margin:0 auto;">
+        <div style="margin-bottom:48px;">
+            <p class="section-label reveal"><span class="accent-bar"></span>Capabilities</p>
+            <h2 class="section-title reveal reveal-delay-1">THE<br>TOOLKIT</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:20px;">
+            <div class="tool-card reveal hover-me">
+                <p class="num">01 / VIDEO PRODUCTION</p>
+                <h3>Video Editing</h3>
+                <div class="tool-row"><span class="name">DaVinci Resolve</span><span class="tag">Pro Color · NLE</span></div>
+                <div class="tool-row"><span class="name">CapCut Desktop</span><span class="tag">Rapid Form</span></div>
+            </div>
+            <div class="tool-card reveal reveal-delay-1 hover-me">
+                <p class="num">02 / DYNAMIC SYSTEMS</p>
+                <h3>Motion Design</h3>
+                <div class="tool-row"><span class="name">After Effects</span><span class="tag">VFX · Motion</span></div>
+                <div class="tool-row"><span class="name">Kinetic Typography</span><span class="tag">Expression-Driven</span></div>
+            </div>
+            <div class="tool-card reveal reveal-delay-2 hover-me">
+                <p class="num">03 / STATIC ASSETS</p>
+                <h3>Graphic Design</h3>
+                <div class="tool-row"><span class="name">Adobe Photoshop</span><span class="tag">Raster · Thumbnails</span></div>
+                <div class="tool-row"><span class="name">Figma</span><span class="tag">UI / UX Systems</span></div>
+                <div class="tool-row"><span class="name">Canva</span><span class="tag">Template Logic</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     VIDEO WORKS  — generated from VIDEO_DATA in script.js
+═══════════════════════════════════════════════════════ -->
+<section id="video" class="section-pad" style="background:var(--surface);">
+    <div style="max-width:1280px; margin:0 auto;">
+        <div style="margin-bottom:48px;">
+            <p class="section-label reveal"><span class="accent-bar"></span>Showcase</p>
+            <h2 class="section-title reveal reveal-delay-1">MOTION<br>WORKS</h2>
+        </div>
+
+        <!-- SHORT-FORM grid — injected by renderVideos() -->
+        <div style="margin-bottom:64px;" id="short-form-section">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--border); padding-bottom:16px; margin-bottom:28px;">
+                <h3 class="font-display" style="font-size:14px; color:var(--dim);">SHORT-FORM · 9:16</h3>
+                <span style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted);">Reels · Shorts</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;" class="short-grid" id="short-video-container">
+                <!-- injected by renderVideos() -->
+            </div>
+        </div>
+
+        <!-- LONG-FORM grid — injected by renderVideos() -->
+        <div id="long-form-section">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--border); padding-bottom:16px; margin-bottom:28px;">
+                <h3 class="font-display" style="font-size:14px; color:var(--dim);">LONG-FORM · 16:9</h3>
+                <span style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted);">Story Telling · Flow</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px;" class="wide-grid" id="long-video-container">
+                <!-- injected by renderVideos() -->
+            </div>
+        </div>
+
+        <!-- NARRATIVE list — injected by renderVideos() -->
+        <div id="narrative-section" style="margin-top:64px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--border); padding-bottom:16px; margin-bottom:8px;">
+                <h3 class="font-display" style="font-size:14px; color:var(--dim);">NARRATIVE · LONG-FORM</h3>
+                <span style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted);">Storytelling & Flow</span>
+            </div>
+            <div id="narrative-container">
+                <!-- injected by renderVideos() -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DESIGN GALLERY — generated from DESIGN_DATA in script.js
+═══════════════════════════════════════════════════════ -->
+<section id="design" class="section-pad dg-section">
+    <div class="dg-wrap">
+
+        <!-- Header row -->
+        <div class="dg-header reveal">
+            <div>
+                <p class="section-label"><span class="accent-bar"></span>Static Systems</p>
+                <h2 class="section-title">DESIGN<br>GALLERY</h2>
+            </div>
+            <!-- Filter tabs — categories auto-built from DESIGN_DATA -->
+            <div class="dg-filters" id="dg-filters" role="tablist">
+                <!-- injected by renderGallery() -->
+            </div>
+        </div>
+
+        <!-- Featured spotlight — first item with featured:true -->
+        <div id="dg-featured-wrap">
+            <!-- injected by renderGallery() -->
+        </div>
+
+        <!-- Main masonry grid -->
+        <div class="dg-grid" id="dg-grid">
+            <!-- injected by renderGallery() -->
+        </div>
+
+        <!-- Count strip -->
+        <div class="dg-strip reveal">
+            <span id="dg-count">0 works</span>
+            <span class="dg-strip-line"></span>
+            <span>More uploading throughout 2026</span>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     IMPACT / RETENTION
+═══════════════════════════════════════════════════════ -->
+<section id="impact" class="section-pad" style="background:var(--surface);">
+    <div style="max-width:1280px; margin:0 auto;">
+        <div style="margin-bottom:48px;">
+            <p class="section-label reveal"><span class="accent-bar"></span>Performance</p>
+            <h2 class="section-title reveal reveal-delay-1">RETENTION<br>CHEMISTRY</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:5fr 7fr; gap:64px; align-items:start;" class="impact-grid">
+            <div class="reveal">
+                <p style="font-size:14px; line-height:1.85; color:var(--dim); margin-bottom:32px;">
+                    Good editing borrows from chemical kinetics — model the decay rate of viewer
+                    attention, engineer localized spikes of energy, balance tension and release.
+                    The result: videos that <em class="font-serif-it" style="color:#fff;">hold.</em>
+                </p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div class="metric-box hover-me">
+                        <p class="metric-num">42%</p>
+                        <p class="metric-label">Avg Retention</p>
+                        <p class="metric-desc">Typical unstructured edits bleed audience in seconds.</p>
+                    </div>
+                    <div class="metric-box hover-me">
+                        <p class="metric-num accent">+82%</p>
+                        <p class="metric-label">Paced Retention</p>
+                        <p class="metric-desc">Structurally engineered cuts built around attention mechanics.</p>
+                    </div>
+                    <div class="metric-box hover-me" style="grid-column:span 2;">
+                        <p class="metric-num" style="font-size:2rem;">3× CTR</p>
+                        <p class="metric-label">Thumbnail Impact</p>
+                        <p class="metric-desc">High-contrast graphic design that triggers the click before the algorithm even helps.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-delay-1">
+                <div style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:24px;">
+                    <p style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim); margin-bottom:16px; text-align:center;">
+                        Viewer Retention Curve · 60-Second Window
+                    </p>
+                    <div style="position:relative; height:280px;">
+                        <canvas id="retentionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     FEEDBACK SECTION
+═══════════════════════════════════════════════════════ -->
+<section id="feedback" class="section-pad" style="background:var(--bg);">
+    <div style="max-width:1280px; margin:0 auto;">
+        <div style="margin-bottom:64px;">
+            <p class="section-label reveal"><span class="accent-bar"></span>Client Voice</p>
+            <h2 class="section-title reveal reveal-delay-1">WHAT CLIENTS<br>ARE SAYING.</h2>
+        </div>
+        <div class="feedback-grid">
+            <!-- LEFT: Testimonials Wall -->
+            <div class="feedback-wall">
+                <div style="margin-bottom:24px;">
+                    <p style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);">Verified Client Testimonials</p>
+                </div>
+                <div id="feedback-cards-container">
+                    <div id="feedback-empty-state" style="display:none; padding:48px 0; text-align:center;">
+                        <p style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--muted);">No testimonials yet — be the first.</p>
+                    </div>
+                </div>
+                <div id="feedback-summary" style="display:none; margin-top:32px; padding-top:24px; border-top:1px solid var(--border);">
+                    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                        <div id="summary-score" style="font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; letter-spacing:-0.04em; color:var(--accent);">—</div>
+                        <div>
+                            <div id="summary-stars" style="display:flex; gap:3px; margin-bottom:4px;"></div>
+                            <p id="summary-count" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:var(--dim);"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- RIGHT: Give Feedback Form -->
+            <div class="feedback-form-panel reveal reveal-delay-2">
+                <div style="background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:32px;">
+                    <p style="font-family:'Syne',sans-serif; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px;">Leave a Review</p>
+                    <p style="font-size:12px; color:var(--dim); margin-bottom:28px; line-height:1.6;">Worked with Sashank? Share your experience below.</p>
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-input hover-me" placeholder="e.g. Arjun Sharma" id="fb-name" maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role / Company <span style="color:var(--muted); font-size:8px;">(optional)</span></label>
+                        <input type="text" class="form-input hover-me" placeholder="e.g. Founder, BrandCo" id="fb-role" maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rating</label>
+                        <div id="star-rating" class="star-rating-row">
+                            <button class="star-btn hover-me" data-val="1">★</button>
+                            <button class="star-btn hover-me" data-val="2">★</button>
+                            <button class="star-btn hover-me" data-val="3">★</button>
+                            <button class="star-btn hover-me" data-val="4">★</button>
+                            <button class="star-btn hover-me" data-val="5">★</button>
+                        </div>
+                        <p id="rating-label" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.2em; color:var(--dim); margin-top:6px;">Click to rate</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Your Feedback</label>
+                        <textarea class="form-input hover-me" rows="5" placeholder="Tell others about your experience working with Sashank..." id="fb-text" maxlength="2000"></textarea>
+                    </div>
+                    <button class="btn-primary hover-me" id="fb-submit-btn" onclick="submitFeedback()">Submit Review →</button>
+                    <div id="fb-success" style="display:none; background:rgba(200,255,0,.06); border:1px solid rgba(200,255,0,.2); padding:16px; border-radius:4px; margin-top:16px; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); text-align:center;">
+                        ✓ Review submitted! It will appear once approved.
+                    </div>
+                    <div id="fb-error" style="display:none; background:rgba(255,80,80,.06); border:1px solid rgba(255,80,80,.25); padding:16px; border-radius:4px; margin-top:16px; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:#ff6060; text-align:center;">
+                        ✕ Please fill in your name, rating, and feedback.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     INQUIRE / CONTACT
+═══════════════════════════════════════════════════════ -->
+<section id="inquire" class="section-pad">
+    <div style="max-width:1280px; margin:0 auto;">
+        <div style="margin-bottom:48px;">
+            <p class="section-label reveal"><span class="accent-bar"></span>Get in touch</p>
+            <h2 class="section-title reveal reveal-delay-1">LET'S<br>ENGINEER<br>SOMETHING.</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px;" class="contact-grid">
+            <div class="reveal">
+                <p style="font-size:14px; line-height:1.85; color:var(--dim); margin-bottom:32px; max-width:440px;">
+                    Looking to supercharge a brand's visual presence, design a tight asset set,
+                    or build a high-retention video pipeline? I'm currently accepting freelance work
+                    alongside my engineering studies.
+                </p>
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    <div>
+                        <p style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);">Email</p>
+                        <p style="font-size:14px; color:#fff; margin-top:4px;">sashanksahoo208@gmail.com</p>
+                    </div>
+                    <div>
+                        <p style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);">Location</p>
+                        <p style="font-size:14px; color:#fff; margin-top:4px;">NIT Rourkela, Odisha, India</p>
+                    </div>
+                    <div>
+                        <p style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);">Status</p>
+                        <p style="font-size:14px; color:var(--accent); margin-top:4px;">● Open to Freelance · 2026</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-delay-2">
+                <div style="background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:32px;">
+
+                    <!-- ══════════════════════════════════════════════════
+                         FORMSPREE EMAIL SETUP — 3 steps, done once:
+                         1. Go to https://formspree.io → Sign up free
+                         2. Create a new form → copy your Form ID
+                         3. Replace YOUR_FORM_ID below with it
+                         Every submission then lands in sashanksahoo208@gmail.com
+                    ════════════════════════════════════════════════════ -->
+
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input hover-me" placeholder="e.g. Arjun Sharma" id="f-name" maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input hover-me" placeholder="e.g. arjun@example.com" id="f-email" maxlength="254">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Scope</label>
+                        <textarea class="form-input hover-me" rows="4" placeholder="Describe your project goals, timeline, budget..." id="f-msg" maxlength="5000"></textarea>
+                    </div>
+                    <button class="btn-primary hover-me" id="submit-btn" onclick="submitForm()">Send Inquiry →</button>
+
+                    <!-- Success state -->
+                    <div id="form-success">
+                        ✓ Message sent — Sashank will get back to you shortly.
+                    </div>
+                    <!-- Error state -->
+                    <div id="form-error">
+                        ✕ Something went wrong. Email directly: sashanksahoo208@gmail.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════
+     LIGHTBOX — for design gallery images
+═══════════════════════════════════════════════════════ -->
+<div id="lightbox" class="lightbox" role="dialog" aria-label="Image viewer">
+    <button class="lightbox-close hover-me" id="lightbox-close" aria-label="Close">✕</button>
+    <img id="lightbox-img" src="" alt="">
+    <p id="lightbox-caption" class="lightbox-caption"></p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p class="copy">© 2026 Sashank Sekhar Sahoo · NIT Rourkela</p>
+    <nav>
+        <a href="https://x.com/SashankSek20197" class="hover-me">Twitter</a>
+        <a href="https://www.linkedin.com/in/sashank-sekhar-sahoo-968a65357/" class="hover-me">LinkedIn</a>
+        <a href="https://www.instagram.com/_sashank_99_/" class="hover-me">Instagram</a>
+        <a href="#" class="hover-me">Behance</a>
+    </nav>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

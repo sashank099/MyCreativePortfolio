@@ -1,63 +1,96 @@
-# Sashank Sekhar Sahoo — Creative Portfolio
+<h1>Sashank Sekhar Sahoo — Creative Portfolio</h1>
 
-A cinematic, single-page creative portfolio built to showcase filmmaking, video editing, motion graphics, and graphic design work. Engineered for performance with a dark editorial aesthetic, smooth scroll-reveal animations, a custom cursor, and a fully headless CMS powered by a single JavaScript config block.
+<p>A cinematic, single-page creative portfolio built to showcase filmmaking, video editing, motion graphics, and graphic design work. Engineered for performance with a dark editorial aesthetic, smooth scroll-reveal animations, a custom cursor, and a fully headless CMS powered by a single JavaScript config block.</p>
 
-> **Vibe-coded with AI assistance.** This project was built entirely through natural-language prompting with Claude (Anthropic). No traditional dev workflow — just ideas, iteration, and vibes.
+<blockquote>
+    <p><strong>Vibe-coded with AI assistance.</strong> This project was built entirely through natural-language prompting with Claude (Anthropic), Gemini (Google), and ChatGPT (OpenAI). No traditional dev workflow — just ideas, iteration, and vibes.</p>
+</blockquote>
 
----
+<hr>
 
-## Live Sections
+<h2>Live Sections</h2>
 
-| Section | What it does |
-|---|---|
-| **Hero** | Animated intro with photo panel, stat pills, and particle canvas |
-| **About + Timeline** | Bio, personal journey, and career milestones |
-| **Toolkit** | Skills and software stack display |
-| **Motion Works** | Video gallery — short-form (9:16 reels), long-form (16:9 brand films), and a narrative project list |
-| **Design Gallery** | Featured spotlight card + filterable masonry grid with lightbox |
-| **Impact / Retention Chemistry** | Chart.js-powered analytics display (toggleable) |
-| **Feedback** | Client review submission form with star ratings |
-| **Inquire / Contact** | Freelance inquiry form (Formspree-powered) |
+<table>
+    <thead>
+        <tr>
+            <th>Section</th>
+            <th>What it does</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Hero</strong></td>
+            <td>Animated intro with photo panel, stat pills, and particle canvas</td>
+        </tr>
+        <tr>
+            <td><strong>About + Timeline</strong></td>
+            <td>Bio, personal journey, and career milestones</td>
+        </tr>
+        <tr>
+            <td><strong>Toolkit</strong></td>
+            <td>Skills and software stack display</td>
+        </tr>
+        <tr>
+            <td><strong>Motion Works</strong></td>
+            <td>Video gallery — short-form (9:16 reels), long-form (16:9 brand films), and a narrative project list</td>
+        </tr>
+        <tr>
+            <td><strong>Design Gallery</strong></td>
+            <td>Featured spotlight card + filterable masonry grid with lightbox</td>
+        </tr>
+        <tr>
+            <td><strong>Impact / Retention Chemistry</strong></td>
+            <td>Chart.js-powered analytics display (toggleable)</td>
+        </tr>
+        <tr>
+            <td><strong>Feedback</strong></td>
+            <td>Client review submission form with star ratings</td>
+        </tr>
+        <tr>
+            <td><strong>Inquire / Contact</strong></td>
+            <td>Freelance inquiry form (Formspree-powered)</td>
+        </tr>
+    </tbody>
+</table>
 
----
+<hr>
 
-## Tech Stack
+<h2>Tech Stack</h2>
 
-- **HTML5 / CSS3 / Vanilla JS** — no frameworks, no build step, opens straight in a browser
-- **Tailwind CSS** (CDN) — utility classes for layout
-- **Chart.js** (CDN) — retention/analytics chart in the Impact section
-- **Cloudinary** — video and image hosting with adaptive streaming (`q_auto`, `f_auto`)
-- **Formspree** — serverless contact form handling
-- **Google Fonts** — Inter, Playfair Display, Syne, DM Mono
+<ul>
+    <li><strong>HTML5 / CSS3 / Vanilla JS</strong> — no frameworks, no build step, opens straight in a browser</li>
+    <li><strong>Tailwind CSS</strong> (CDN) — utility classes for layout</li>
+    <li><strong>Chart.js</strong> (CDN) — retention/analytics chart in the Impact section</li>
+    <li><strong>Cloudinary</strong> — video and image hosting with adaptive streaming (<code>q_auto</code>, <code>f_auto</code>)</li>
+    <li><strong>Formspree</strong> — serverless contact form handling</li>
+    <li><strong>Google Fonts</strong> — Inter, Playfair Display, Syne, DM Mono</li>
+</ul>
 
----
+<hr>
 
-## File Structure
+<h2>File Structure</h2>
 
-```
-/
-├── index.html              ← structure only — DO NOT EDIT
-├── style.css               ← all visual styles — DO NOT EDIT
-├── script.js               ← ★ EDIT THIS FILE ONLY (CMS block at the top)
+<pre><code>/
+├── index.html              &larr; structure only — DO NOT EDIT
+├── style.css               &larr; all visual styles — DO NOT EDIT
+├── script.js               &larr; ★ EDIT THIS FILE ONLY (CMS block at the top)
 ├── assets/
-│   ├── videos/             ← local .mp4 files (if not using Cloudinary)
-│   ├── images/             ← poster and design images
-│   └── thumbnails/         ← video preview images
-└── README.md
-```
+│   ├── videos/             &larr; local .mp4 files (if not using Cloudinary)
+│   ├── images/             &larr; poster and design images
+│   └── thumbnails/         &larr; video preview images
+└── README.md</code></pre>
 
-The entire content of the site is controlled by three data objects at the very top of `script.js`. You never need to touch `index.html` or `style.css`.
+<p>The entire content of the site is controlled by three data objects at the very top of <code>script.js</code>. You never need to touch <code>index.html</code> or <code>style.css</code>.</p>
 
----
+<hr>
 
-## CMS — How to Edit Content
+<h2>CMS — How to Edit Content</h2>
 
-Open `script.js`. Everything above the `END OF CMS` comment is yours to edit.
+<p>Open <code>script.js</code>. Everything above the <code>END OF CMS</code> comment is yours to edit.</p>
 
-### Add a short-form reel (9:16)
+<h3>Add a short-form reel (9:16)</h3>
 
-```js
-// In VIDEO_DATA:
+<pre><code class="language-js">// In VIDEO_DATA:
 {
     type:      "short",
     title:     "Reel Title",
@@ -68,13 +101,11 @@ Open `script.js`. Everything above the `END OF CMS` comment is yours to edit.
         publicId:  "your_video_public_id",
     },
     thumbnail: ""   // leave "" to auto-generate from Cloudinary
-},
-```
+},</code></pre>
 
-### Add a long-form video (16:9)
+<h3>Add a long-form video (16:9)</h3>
 
-```js
-// In VIDEO_DATA:
+<pre><code class="language-js">// In VIDEO_DATA:
 {
     type:      "long",
     title:     "Project Title",
@@ -85,26 +116,22 @@ Open `script.js`. Everything above the `END OF CMS` comment is yours to edit.
         publicId:  "your_video_public_id",
     },
     thumbnail: ""
-},
-```
+},</code></pre>
 
-### Add a narrative project (no video embed — links to YouTube)
+<h3>Add a narrative project (no video embed — links to YouTube)</h3>
 
-```js
-// In VIDEO_DATA:
+<pre><code class="language-js">// In VIDEO_DATA:
 {
     type:    "narrative",
     year:    "2026 · 12:40",
     title:   "Project Name",
     desc:    "One or two sentences about the project and its approach.",
     youtube: "YOUR_YOUTUBE_VIDEO_ID"
-},
-```
+},</code></pre>
 
-### Add a design to the gallery
+<h3>Add a design to the gallery</h3>
 
-```js
-// In DESIGN_DATA:
+<pre><code class="language-js">// In DESIGN_DATA:
 {
     featured:  false,
     title:     "Poster Name",
@@ -112,81 +139,87 @@ Open `script.js`. Everything above the `END OF CMS` comment is yours to edit.
     image:     cldImg("your_cloudinary_image_public_id"),
     chip:      "Print Design",
     ratio:     "4 : 5"
-},
-```
+},</code></pre>
 
-### Toggle entire sections on or off
+<h3>Toggle entire sections on or off</h3>
 
-```js
-const SETTINGS = {
+<pre><code class="language-js">const SETTINGS = {
     showAbout:    true,
     showToolkit:  true,
     showVideo:    true,
     showDesign:   true,
-    showImpact:   false,   // ← set false to hide completely
+    showImpact:   false,   // &larr; set false to hide completely
     showFeedback: true,
     showContact:  true
-};
-```
+};</code></pre>
 
----
+<hr>
 
-## Cloudinary Setup
+<h2>Cloudinary Setup</h2>
 
-Videos and images are hosted on [Cloudinary](https://cloudinary.com) for fast, adaptive delivery.
+<p>Videos and images are hosted on <a href="https://cloudinary.com" target="_blank">Cloudinary</a> for fast, adaptive delivery.</p>
 
-1. Create a free Cloudinary account.
-2. Upload your video or image.
-3. Copy the **Cloud Name** from the dashboard and the **Public ID** from the asset.
-4. Paste them into the `cloudinary: {}` block in `VIDEO_DATA`, or use `cldImg("public_id")` for images in `DESIGN_DATA`.
+<ol>
+    <li>Create a free Cloudinary account.</li>
+    <li>Upload your video or image.</li>
+    <li>Copy the <strong>Cloud Name</strong> from the dashboard and the <strong>Public ID</strong> from the asset.</li>
+    <li>Paste them into the <code>cloudinary: {}</code> block in <code>VIDEO_DATA</code>, or use <code>cldImg("public_id")</code> for images in <code>DESIGN_DATA</code>.</li>
+</ol>
 
-The site uses `q_auto` and `f_auto` transforms automatically — no manual optimization needed.
+<p>The site uses <code>q_auto</code> and <code>f_auto</code> transforms automatically — no manual optimization needed.</p>
 
----
+<hr>
 
-## Contact Form Setup (Formspree)
+<h2>Contact Form Setup (Formspree)</h2>
 
-1. Go to [formspree.io](https://formspree.io) and create a free account.
-2. Create a new form and copy your **Form ID**.
-3. In `script.js`, find `submitForm()` and replace `YOUR_FORM_ID` with it.
+<ol>
+    <li>Go to <a href="https://formspree.io" target="_blank">formspree.io</a> and create a free account.</li>
+    <li>Create a new form and copy your <strong>Form ID</strong>.</li>
+    <li>In <code>script.js</code>, find <code>submitForm()</code> and replace <code>YOUR_FORM_ID</code> with it.</li>
+</ol>
 
-Submissions will be delivered directly to `sashanksahoo208@gmail.com`.
+<p>Submissions will be delivered directly to <code>sashanksahoo208@gmail.com</code>.</p>
 
----
+<hr>
 
-## Running Locally
+<h2>Running Locally</h2>
 
-No install, no build step.
+<p>No install, no build step.</p>
 
-```bash
-# Clone the repo
+<pre><code class="language-bash"># Clone the repo
 git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
 
 # Open in browser (any of these work)
 open index.html
 # or use VS Code Live Server
-# or: python3 -m http.server 3000
-```
+# or: python3 -m http.server 3000</code></pre>
 
----
+<hr>
 
-## AI Assistance Disclosure
+<h2>AI Assistance Disclosure</h2>
 
-This project is **fully vibe-coded** — designed and built through iterative natural-language conversation with **Claude** by Anthropic, without writing code manually from scratch. The HTML structure, CSS styling system, JavaScript CMS engine, Cloudinary integration, animation logic, and this README were all produced through AI-assisted prompting and iteration.
+<p>This project is <strong>fully vibe-coded</strong> — designed and built through iterative natural-language conversation with <strong>Claude</strong> (Anthropic), <strong>Gemini</strong> (Google), and <strong>ChatGPT</strong> (OpenAI), without writing code manually from scratch. The HTML structure, CSS styling system, JavaScript CMS engine, Cloudinary integration, cross-browser responsive debugging, animation logic, and this README were all produced through AI-assisted prompting and iteration.</p>
 
-This is an intentional creative and engineering workflow choice — not a shortcut, but a method. The ideas, creative direction, content, and all final decisions are the author's own.
+<p>This is an intentional creative and engineering workflow choice — not a shortcut, but a method. The ideas, creative direction, content, and all final decisions are the author's own.</p>
 
----
+<hr>
 
-## Author
+<h2>Author</h2>
 
-**Sashank Sekhar Sahoo**
-2nd Year · B.Tech Chemical Engineering · NIT Rourkela
-Odisha, India · 2026
+<p>
+    <strong>Sashank Sekhar Sahoo</strong><br>
+    2nd Year · B.Tech Chemical Engineering · NIT Rourkela<br>
+    Odisha, India · 2026
+</p>
 
-[Twitter](https://x.com/SashankSek20197) · [LinkedIn](https://www.linkedin.com/in/sashank-sekhar-sahoo-968a65357/) · [Instagram](https://www.instagram.com/_sashank_99_/) · sashanksahoo208@gmail.com
+<p>
+    <a href="https://x.com/SashankSek20197" target="_blank">Twitter</a> · 
+    <a href="https://www.linkedin.com/in/sashank-sekhar-sahoo-968a65357/" target="_blank">LinkedIn</a> · 
+    <a href="https://www.instagram.com/_sashank_99_/" target="_blank">Instagram</a> · 
+    <a href="mailto:sashanksahoo208@gmail.com">sashanksahoo208@gmail.com</a>
+</p>
 
----
+<hr>
 
-*© 2026 Sashank Sekhar Sahoo · NIT Rourkela*
+<p><em>&copy; 2026 Sashank Sekhar Sahoo · NIT Rourkela</em></p>

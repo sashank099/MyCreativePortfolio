@@ -191,6 +191,18 @@ const SETTINGS = {
    END OF CMS — DO NOT EDIT BELOW THIS LINE
 ═══════════════════════════════════════════════════════════ */
 
+/* ─── CURSOR MODE DETECTION — runs before anything else ────
+   On non-touch devices: add .desktop-cursor to <html>
+   This gates ALL cursor:none CSS rules so touch devices are unaffected */
+(function () {
+    var isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (!isTouch) {
+        document.documentElement.classList.add('desktop-cursor');
+    }
+})();
+
+
+
 
 /* ─── APPLY SETTINGS — hide sections + sync nav ─────────── */
 (function applySettings() {
@@ -302,7 +314,7 @@ function buildCloudinaryEmbed(v) {
         <div class="cld-lazy"
              data-cld-url="${videoUrl}"
              data-cld-poster="${thumb}"
-             style="position:absolute;inset:0;width:100%;height:100%;cursor:none;">
+             style="position:absolute;inset:0;width:100%;height:100%;">
             <img src="${thumb}"
                  alt="${v.title}" loading="lazy"
                  style="width:100%;height:100%;object-fit:cover;display:block;" />
@@ -339,7 +351,7 @@ function renderVideos() {
             const mediaEmbed = v.cloudinary
                 ? buildCloudinaryEmbed(v)
                 : v.youtube
-                ? `<div class="yt-lazy" data-ytid="${v.youtube}" style="position:absolute;inset:0;width:100%;height:100%;cursor:none;">
+                ? `<div class="yt-lazy" data-ytid="${v.youtube}" style="position:absolute;inset:0;width:100%;height:100%;">
                         <img src="${v.thumbnail || `https://i.ytimg.com/vi/${v.youtube}/hqdefault.jpg`}"
                              alt="${v.title}" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;display:block;" />
@@ -376,7 +388,7 @@ function renderVideos() {
             const mediaEmbed = v.cloudinary
                 ? buildCloudinaryEmbed(v)
                 : v.youtube
-                ? `<div class="yt-lazy" data-ytid="${v.youtube}" style="position:absolute;inset:0;width:100%;height:100%;cursor:none;">
+                ? `<div class="yt-lazy" data-ytid="${v.youtube}" style="position:absolute;inset:0;width:100%;height:100%;">
                         <img src="${v.thumbnail || `https://i.ytimg.com/vi/${v.youtube}/hqdefault.jpg`}"
                              alt="${v.title}" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;display:block;" />
@@ -725,8 +737,9 @@ function initLightbox() {
 }
 
 
-/* ─── HOVER LISTENER (cursor effect) ────────────────────── */
+/* ─── HOVER LISTENER (cursor effect — desktop only) ─────── */
 function initHoverListeners() {
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
     document.querySelectorAll('.hover-me, a, button, input, textarea').forEach(el => {
         if (el._hoverBound) return;
         el._hoverBound = true;
@@ -859,8 +872,11 @@ function initHoverListeners() {
 })();
 
 
-/* ─── CUSTOM CURSOR ─────────────────────────────────────── */
+/* ─── CUSTOM CURSOR (desktop only — skipped on touch) ──── */
 (function () {
+    // Skip entirely on touch-primary devices
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
     const dot  = document.getElementById('cursor-dot');
     const ring = document.getElementById('cursor-ring');
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -895,9 +911,9 @@ function initHoverListeners() {
     document.addEventListener('mouseenter', showCursor);
 
     /* Fix: iframes swallow mousemove events, causing cursor to freeze.
-       Overlay a transparent div on each iframe while NOT interacting,
-       and remove it only on click so the video still works. */
+       On touch devices we skip this entirely — shields block tap events. */
     function fixIframeCursors() {
+        if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
         document.querySelectorAll('iframe').forEach(iframe => {
             if (iframe._cursorFixed) return;
             iframe._cursorFixed = true;
@@ -911,8 +927,7 @@ function initHoverListeners() {
                 'position:absolute',
                 'inset:0',
                 'z-index:10',
-                'cursor:none',
-                'background:transparent'
+                                'background:transparent'
             ].join(';');
 
             /* Track cursor through the shield */
@@ -1453,7 +1468,7 @@ function openEditModal(id, token, currentRating) {
         <div class="fb-modal-box">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
                 <p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Edit Your Review</p>
-                <button class="lightbox-close hover-me" id="edit-modal-close" style="position:static;cursor:none;">✕</button>
+                <button class="lightbox-close hover-me" id="edit-modal-close" style="position:static;">✕</button>
             </div>
             <div class="form-group">
                 <label class="form-label">Rating</label>
@@ -1537,5 +1552,41 @@ async function saveEdit(id, token) {
         document.addEventListener('DOMContentLoaded', renderFeedback);
     } else {
         renderFeedback();
+    }
+})();
+
+/* ─── TOUCH OPTIMIZATIONS ────────────────────────────────── */
+(function () {
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (!isTouch) return;
+
+    // Remove 300ms tap delay on all interactive elements
+    const style = document.createElement('style');
+    style.textContent = '*, *::before, *::after { touch-action: manipulation; }';
+    document.head.appendChild(style);
+
+    // Desktop hint pill
+    const hint  = document.getElementById('desktop-hint');
+    const close = document.getElementById('desktop-hint-close');
+    if (hint) {
+        hint.style.display = 'flex'; // override default display:none on mobile
+        if (close) {
+            close.addEventListener('click', () => {
+                hint.style.animation = 'none';
+                hint.style.opacity   = '0';
+                hint.style.transform = 'translateX(-50%) translateY(20px)';
+                hint.style.transition = 'opacity .3s, transform .3s';
+                setTimeout(() => hint.remove(), 350);
+            });
+        }
+        // Auto-dismiss after 6 seconds
+        setTimeout(() => {
+            if (!hint.parentNode) return;
+            hint.style.animation = 'none';
+            hint.style.opacity   = '0';
+            hint.style.transform = 'translateX(-50%) translateY(20px)';
+            hint.style.transition = 'opacity .4s, transform .4s';
+            setTimeout(() => hint.remove(), 450);
+        }, 6000);
     }
 })();

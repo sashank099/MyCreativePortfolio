@@ -63,6 +63,38 @@ const VIDEO_DATA = [
         desc:    "A psychological narrative exploring the two faces of trust — the one we choose to see and the one hidden beneath. Crafted through deliberate pacing, atmosphere, and emotional revelation.",
         youtube: "Mr7VzmLbHFc",   // ← add this to make the title a clickable ⇗ Watch on YouTube link
     },
+
+    {
+        type:    "narrative",
+        year:    "2026 · 1:12:29",
+        title:   "Rashtriya Rifles & Counter Terr*rism | Podcast",
+        desc:    "From real experiences in uniform to advice for the next generation, this discussion is packed with motivation, wisdom, and stories that truly reflect the spirit of service and resilience.",
+        youtube: "-7uFE1lgVYw",   // ← add this to make the title a clickable ⇗ Watch on YouTube link
+    },
+
+    {
+        type:      "long",
+        title:     "Roots Fest",
+        category:  "AfterMovie",
+        subtitle:  "Fast Paced · Edit",
+        cloudinary: {
+            cloudName: "dfyoex2hk",
+            publicId:  "roots_qoxnga",
+        },
+        thumbnail: "https://res.cloudinary.com/dfyoex2hk/image/upload/v1780682912/roots_afznzy.jpg"
+    },
+
+    {
+        type:      "long",
+        title:     "Maps Edit",
+        category:  "Documentary",
+        subtitle:  "Documentary Style · Edit",
+        cloudinary: {
+            cloudName: "dfyoex2hk",
+            publicId:  "Documentary_iqxmqw",
+        },
+        thumbnail: "https://res.cloudinary.com/dfyoex2hk/image/upload/v1780682909/documentary_ezbtrr.jpg"
+    },
     /* ── Add more short-form reels here ──
     // Option A — Cloudinary (recommended when YT has copyright issues):
     {

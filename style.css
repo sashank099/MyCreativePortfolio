@@ -1205,3 +1205,47 @@ body::after {
 @media (min-width: 769px) {
     .desktop-hint { display: none !important; }
 }
+
+/* ══════════════════════════════════════════════════════
+   MOBILE HITBOX ALIGNMENT FIXES
+═══════════════════════════════════════════════════════ */
+
+/* 1. Prevent the hidden drawer from blocking touches on the right edge */
+.mobile-drawer {
+    pointer-events: none;
+}
+.mobile-drawer.open {
+    pointer-events: auto;
+}
+
+/* 2. Prepare the buttons for an expanded hit area */
+.mobile-menu-btn,
+.mobile-drawer-close {
+    position: relative;
+}
+
+/* 3. Tell the browser to ignore the visual lines so the main button registers the tap */
+.mobile-menu-btn span {
+    pointer-events: none;
+}
+
+/* 4. Create an invisible tap zone that extends 15px beyond the visual button */
+.mobile-menu-btn::after,
+.mobile-drawer-close::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    bottom: -15px;
+    left: -15px;
+    background: transparent;
+}
+
+/* ══════════════════════════════════════════════════════
+   LIGHTBOX CLICK-HIJACKING FIX
+═══════════════════════════════════════════════════════ */
+
+/* Force the close button to ignore touches completely unless the lightbox is active */
+.lightbox:not(.open) .lightbox-close {
+    pointer-events: none !important;
+}

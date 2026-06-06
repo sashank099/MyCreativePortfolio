@@ -351,7 +351,7 @@ function buildCloudinaryEmbed(v) {
                  alt="${v.title}" loading="lazy"
                  style="width:100%;height:100%;object-fit:cover;display:block;" />
             <div class="yt-play-btn" aria-label="Play video">
-                <svg viewBox="0 0 68 48" width="60" height="42">
+                <svg viewBox="0 0 68 48" width="56" height="40">
                     <rect width="68" height="48" rx="12" fill="rgba(0,0,0,.72)"/>
                     <path d="M27 34l18-10-18-10v20z" fill="#fff"/>
                 </svg>
@@ -359,7 +359,48 @@ function buildCloudinaryEmbed(v) {
         </div>`;
 }
 
-/* ─── VIDEO RENDERER ────────────────────────────────────── */
+/* ─── SCROLL AREA WRAP HELPER ────────────────────────────── */
+/**
+ * Wraps a container element in a fixed-height scrollable div
+ * and adds a "Scroll to see more" hint label below.
+ * Heights are defined in CSS per class; desktop and mobile
+ * each have their own values via media queries.
+ *
+ * @param {HTMLElement} container  - the grid/list element to wrap
+ * @param {string}      areaClass  - CSS class for the scroll area
+ * @param {string}      label      - hint text
+ * @param {boolean}     surfaceBg  - true when the section has --surface bg
+ */
+function wrapInScrollArea(container, areaClass, label, surfaceBg) {
+    if (!container) return;
+
+    // Don't double-wrap
+    if (container.closest('.' + areaClass)) return;
+
+    const scrollDiv = document.createElement('div');
+    scrollDiv.className = areaClass;
+
+    const wrapDiv = document.createElement('div');
+    wrapDiv.className = 'mobile-scroll-wrap' + (surfaceBg ? ' surface-section' : '');
+
+    const hint = document.createElement('div');
+    hint.className = 'mobile-scroll-hint';
+    hint.innerHTML = `<span class="mobile-scroll-hint-icon"></span><span>${label}</span>`;
+
+    // Insert wrap around container
+    container.parentNode.insertBefore(wrapDiv, container);
+    wrapDiv.appendChild(scrollDiv);
+    scrollDiv.appendChild(container);
+    wrapDiv.appendChild(hint);
+
+    // Auto-hide hint once user has scrolled
+    scrollDiv.addEventListener('scroll', () => {
+        if (scrollDiv.scrollTop > 20) hint.style.opacity = '0';
+        else hint.style.opacity = '1';
+    }, { passive: true });
+}
+
+
 function renderVideos() {
     const shortContainer     = document.getElementById('short-video-container');
     const longContainer      = document.getElementById('long-video-container');
@@ -473,6 +514,26 @@ function renderVideos() {
 
     /* Re-apply hover-me cursor listeners after injection */
     initHoverListeners();
+
+    /* ── Wrap sections in mobile scroll areas ── */
+    wrapInScrollArea(
+        document.getElementById('short-video-container'),
+        'short-scroll-area',
+        'Scroll to see more reels',
+        true
+    );
+    wrapInScrollArea(
+        document.getElementById('long-video-container'),
+        'long-scroll-area',
+        'Scroll to see more films',
+        true
+    );
+    wrapInScrollArea(
+        document.getElementById('narrative-container'),
+        'narrative-scroll-area',
+        'Scroll to see more',
+        true
+    );
 
     /* ── Lazy YouTube: click thumbnail → swap in iframe ── */
     document.querySelectorAll('.yt-lazy').forEach(el => {
@@ -589,6 +650,12 @@ function renderVideos() {
         .cld-lazy:hover .yt-play-btn svg {
             transform: scale(1.12);
             opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .yt-play-btn svg { width: 40px !important; height: 28px !important; }
+        }
+        @media (max-width: 390px) {
+            .yt-play-btn svg { width: 34px !important; height: 24px !important; }
         }
 
         /* Narrative YouTube link */
@@ -730,6 +797,14 @@ function renderGallery() {
     initLightbox();
     /* ── Re-apply hover-me listeners ── */
     initHoverListeners();
+
+    /* ── Wrap design grid in mobile scroll area ── */
+    wrapInScrollArea(
+        document.getElementById('dg-grid'),
+        'design-scroll-area',
+        'Scroll to see more designs',
+        false   /* section has --bg background */
+    );
 }
 
 

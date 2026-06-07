@@ -8,6 +8,19 @@
 
 const VIDEO_DATA = [
     /* ── SHORT-FORM (9:16) ── */
+
+    {
+        type:      "short",
+        title:     "Sample Edit",
+        category:  "reel",
+        subtitle:  "TALKINGHEAD",
+        cloudinary: {
+            cloudName: "dfyoex2hk",  // from cloudinary.com dashboard
+            publicId:  "task_bkj6st",  // public ID of your uploaded video
+        },
+        thumbnail: "https://res.cloudinary.com/dfyoex2hk/image/upload/v1780856344/task_ic9wrx.jpg"  // optional; auto-generated if omitted
+    },
+
     {
         type:      "short",
         title:     "Reel 1",
